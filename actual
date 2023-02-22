@@ -6,7 +6,7 @@ game.StarterGui:SetCore("SendNotification", {
 local new = {
     main = {
         Mario = true,
-        Prediction = 0.1211, -- 30-70 ping, sets prediction automatically!
+        Prediction = 0.1211, -- default prediction value
         Part = "HumanoidRootPart", -- Head, UpperTorso, HumanoidRootPart, LowerTorso, RightFoot, LeftFoot, RightArm, LeftArm
         Key = "q",
         Notifications = true,
@@ -18,6 +18,18 @@ local new = {
         TracerColor = Color3.fromRGB(78, 82, 82) -- gray
     }
 }
+
+-- update prediction value based on player's ping
+local ping = game.Players.LocalPlayer:Ping()
+if ping >= 0 and ping <= 29 then
+    new.main.Prediction = 0.1145
+elseif ping >= 30 and ping <= 70 then
+    new.main.Prediction = 0.1211
+elseif ping >= 71 and ping <= 120 then
+    new.main.Prediction = 0.1344
+elseif ping > 120 then
+    new.main.Prediction = 0.159
+end
 
 local CurrentCamera = game:GetService "Workspace".CurrentCamera
 local Mouse = game.Players.LocalPlayer:GetMouse()
